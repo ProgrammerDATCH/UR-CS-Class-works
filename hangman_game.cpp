@@ -34,26 +34,26 @@ void displaySecretWord(const std::string& secretWord, const std::string& guessed
     std::cout << "\n";
 }
 
-char getGuess(const std::string& guessedLetters, int& warnings) {
+char getGuess(const std::string& guessedLetters, int& warnings, int& remainingGuesses) {
     char guess;
     std::cout << "Guess a letter: ";
     std::cin >> guess;
     guess = std::tolower(guess);
     
-    if (guessedLetters.find(guess) != std::string::npos) {
-        std::cout << "You've already guessed that letter.\n";
-    } else if (!std::isalpha(guess)) {
+    if (!std::isalpha(guess)) {
         if (warnings > 0) {
             std::cout << "Please enter a valid letter. You have " << warnings << " warning(s) left.\n";
             --warnings;
         } else {
             std::cout << "Please enter a valid letter. You've used all your warnings.\n";
+            --remainingGuesses; // Deduct a guess
         }
+    } else if (guessedLetters.find(guess) != std::string::npos) {
+        std::cout << "You've already guessed that letter.\n";
     }
     
     return guess;
 }
-
 int main() {
     std::string secretWord = selectRandomWord();
     int totalUniqueLetters = 0;
@@ -75,7 +75,7 @@ int main() {
         std::cout << "Secret Word: ";
         displaySecretWord(secretWord, guessedLetters);
         
-        char guess = getGuess(guessedLetters, warnings);
+        char guess = getGuess(guessedLetters, warnings, remainingGuesses);
         
         if (!std::isalpha(guess) || guessedLetters.find(guess) != std::string::npos) {
             continue;
