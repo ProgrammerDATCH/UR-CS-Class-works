@@ -1,3 +1,9 @@
+//Group members:
+// 222008524 TUYISHIME David
+// 222006273 BYUKUSENGE Immaculee
+// 222010802 NYODUSENGA Florence
+
+
 #include <iostream>
 #include <string>
 #include <vector>
